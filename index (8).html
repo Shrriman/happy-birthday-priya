@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Happy Birthday 💗</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose:#ff4d80;
+    --rose-deep:#e8356c;
+    --rose-soft:#ffc2d4;
+    --blush:#fff3f7;
+    --lav:#f3e6ff;
+    --gold:#ffcf6b;
+    --ink:#4a2540;
+    --glass: rgba(255,255,255,0.55);
+  }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; -webkit-user-select:none; user-select:none; }
+  html,body,button,input,a,div{ -webkit-tap-highlight-color:transparent !important; }
+  input{ -webkit-user-select:text; user-select:text; }
+  html,body{
+    margin:0; padding:0; height:100%;
+    font-family:'Poppins', sans-serif;
+    overflow:hidden;
+    background: linear-gradient(180deg, #ffeaf1 0%, #ffd3e2 45%, #ff9fc0 100%);
+  }
+  #app{
+    position:relative;
+    width:100%; height:100vh;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---- cute tone-on-tone pattern background (original, not any IP) ---- */
+  .pattern-bg{
+    position:absolute; inset:0;
+    opacity:0.16;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.9) 2px, transparent 2.5px);
+    background-size: 46px 46px;
+    background-position: 0 0, 23px 23px;
+    pointer-events:none;
+  }
+  .pattern-bg svg{ position:absolute; inset:0; width:100%; height:100%; }
+
+  .glow-blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(50px);
+    pointer-events:none;
+  }
+  .glow-blob.a{ width:260px; height:260px; background:rgba(255,190,220,0.55); top:-60px; left:-60px; }
+  .glow-blob.b{ width:220px; height:220px; background:rgba(255,225,150,0.35); bottom:-40px; right:-40px; }
+
+  .heart-float{
+    position:absolute;
+    color:rgba(255,255,255,0.55);
+    pointer-events:none;
+    animation: floaty 7s ease-in-out infinite;
+    font-size:20px;
+  }
+  @keyframes floaty{
+    0%,100%{ transform:translateY(0) rotate(0deg); opacity:0.7; }
+    50%{ transform:translateY(-16px) rotate(8deg); opacity:1; }
+  }
+
+  .screen{
+    position:relative;
+    width:min(90vw, 380px);
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:18px;
+    z-index:2;
+  }
+  .screen.active{ display:flex; animation:riseIn .5s ease; }
+  @keyframes riseIn{
+    from{ opacity:0; transform:translateY(18px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--rose-deep);
+    font-weight:600;
+    opacity:0.75;
+  }
+
+  .script{
+    font-family:'Dancing Script', cursive;
+    font-weight:700;
+    color:var(--rose-deep);
+    line-height:1.2;
+    text-shadow: 0 2px 18px rgba(255,77,128,0.35);
+  }
+
+  .glass-card{
+    background: var(--glass);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border:1px solid rgba(255,255,255,0.6);
+    border-radius:28px;
+    padding:30px 26px;
+    box-shadow: 0 18px 40px rgba(232,53,108,0.18);
+    width:100%;
+  }
+
+  .btn{
+    font-family:'Poppins', sans-serif;
+    font-weight:600;
+    font-size:14.5px;
+    letter-spacing:0.3px;
+    color:#fff;
+    background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+    border:none;
+    border-radius:30px;
+    padding:15px 30px;
+    box-shadow: 0 10px 24px rgba(232,53,108,0.4);
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:active{ transform: translateY(2px) scale(0.98); box-shadow: 0 6px 14px rgba(232,53,108,0.35); }
+
+  /* ---------- LANDING ---------- */
+  .avatar-ring{
+    width:170px; height:170px;
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #ffffff, #ffe3ee);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 0 0 10px rgba(255,255,255,0.35), 0 20px 40px rgba(232,53,108,0.25);
+  }
+  .avatar-ring svg{ width:120px; height:120px; }
+
+  h1.name-headline{
+    font-size:30px;
+    margin:0;
+  }
+
+  /* ---------- SECRET CODE ---------- */
+  .neon-title{
+    font-family:'Dancing Script', cursive;
+    font-weight:700;
+    font-size:30px;
+    color:#fff;
+    text-shadow:
+      0 0 8px var(--rose),
+      0 0 18px var(--rose),
+      0 0 34px var(--rose-deep);
+  }
+  .code-input{
+    width:100%;
+    padding:15px 18px;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.85);
+    font-family:'Poppins', sans-serif;
+    font-size:14px;
+    color:var(--ink);
+    outline:none;
+    text-align:center;
+  }
+  .code-input::placeholder{ color:#c98aa3; }
+  .code-input.shake{ animation: shake 0.4s ease; }
+  @keyframes shake{
+    0%,100%{ transform:translateX(0); }
+    25%{ transform:translateX(-8px); }
+    75%{ transform:translateX(8px); }
+  }
+  .code-error{
+    font-size:12px;
+    color:#c22b57;
+    min-height:16px;
+  }
+  .code-hint{
+    font-size:11.5px;
+    color:#8a5a6d;
+    opacity:0.8;
+  }
+
+  p.sub{ margin:0; font-size:13.5px; color:#7a4b5b; line-height:1.55; }
+
+  /* ---------- CAKE CUT ---------- */
+  .cut-box{
+    width:100%; height:210px;
+    border-radius:22px;
+    background: rgba(255,255,255,0.4);
+    border:2px dashed rgba(232,53,108,0.35);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+    touch-action:none;
+  }
+  .cake-emoji-big{ font-size:64px; filter:drop-shadow(0 8px 14px rgba(232,53,108,0.25)); }
+  .knife-cursor{ position:absolute; font-size:28px; pointer-events:none; transform:translate(-50%,-50%); display:none; z-index:3; }
+  .slice-line{ position:absolute; top:0; bottom:0; width:3px; background: repeating-linear-gradient(180deg,#fff 0 6px, transparent 6px 12px); display:none; }
+
+  .pixel-cake{ width:150px; }
+
+  /* ---------- GALLERY ---------- */
+  .polaroid-stack{ position:relative; width:220px; height:250px; }
+  .polaroid{
+    position:absolute; inset:0;
+    background:#fff;
+    border-radius:20px;
+    padding:10px 10px 30px;
+    box-shadow: 0 14px 28px rgba(232,53,108,0.22);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .polaroid .frame{
+    width:100%; height:172px; border-radius:14px;
+    background: linear-gradient(135deg, var(--rose-soft), var(--lav));
+    display:flex; align-items:center; justify-content:center;
+    color:rgba(255,255,255,0.8); font-size:30px;
+  }
+  .polaroid .cap{ display:block; text-align:center; font-size:11px; color:#a9788a; margin-top:8px; letter-spacing:1px; }
+  .gallery-dots{ display:flex; gap:6px; justify-content:center; }
+  .gallery-dots span{ width:7px;height:7px;border-radius:50%; background:#f0c3d4; }
+  .gallery-dots span.on{ background:var(--rose-deep); width:18px; border-radius:5px; transition:.25s; }
+
+  /* ---------- LETTER ---------- */
+  .env-box{
+    width:100%; height:200px;
+    border-radius:22px;
+    background: linear-gradient(160deg,#fff,#ffeef4);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; cursor:pointer;
+    box-shadow: 0 14px 30px rgba(232,53,108,0.18);
+  }
+  .wax-seal{
+    width:74px;height:74px;border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #ff7fa6, var(--rose-deep));
+    display:flex; align-items:center; justify-content:center;
+    font-size:28px;
+    box-shadow: 0 0 0 8px rgba(255,255,255,0.4), 0 10px 20px rgba(0,0,0,0.15);
+    animation: pulseSeal 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseSeal{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.07); } }
+
+  /* ---------- MESSAGE ---------- */
+  .msg-card{
+    background:#fff;
+    border-radius:26px;
+    padding:26px 22px;
+    text-align:left;
+    font-size:14px;
+    line-height:1.8;
+    color:var(--ink);
+    max-height:360px;
+    overflow-y:auto;
+    box-shadow: 0 20px 40px rgba(232,53,108,0.22);
+  }
+  .msg-card p{ margin:0 0 14px; }
+  .msg-card p:last-child{ margin-bottom:0; }
+
+  .close-x{
+    position:absolute; top:-12px; right:-12px;
+    width:34px; height:34px;
+    background:#fff; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 14px rgba(0,0,0,0.15);
+    cursor:pointer; font-weight:700; color:var(--rose-deep);
+  }
+
+  #confetti-canvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:5; }
+
+  .signature{
+    position:absolute; bottom:14px; right:20px;
+    font-family:'Dancing Script', cursive;
+    color:rgba(120,50,70,0.5);
+    font-size:15px; z-index:5;
+  }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="glow-blob a"></div>
+  <div class="glow-blob b"></div>
+  <div class="pattern-bg"></div>
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- ============ SCREEN 1: LANDING ============ -->
+  <div class="screen active" id="screen-landing">
+    <div class="avatar-ring">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="60" cy="66" rx="34" ry="30" fill="#c9a58d"/>
+        <path d="M30 46 Q26 22 46 34 Q60 24 74 34 Q94 22 90 46" fill="#c9a58d"/>
+        <ellipse cx="46" cy="60" rx="6" ry="7" fill="#3a2a24"/>
+        <ellipse cx="74" cy="60" rx="6" ry="7" fill="#3a2a24"/>
+        <circle cx="34" cy="72" r="6" fill="#f2a7a0" opacity="0.7"/>
+        <circle cx="86" cy="72" r="6" fill="#f2a7a0" opacity="0.7"/>
+        <path d="M50 76 Q60 84 70 76" stroke="#3a2a24" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <g>
+          <circle cx="46" cy="94" r="12" fill="#7fa8e0"/>
+          <circle cx="60" cy="90" r="13" fill="#5f8fd8"/>
+          <circle cx="74" cy="94" r="12" fill="#7fa8e0"/>
+          <circle cx="53" cy="98" r="10" fill="#6a99dd"/>
+          <circle cx="67" cy="98" r="10" fill="#6a99dd"/>
+          <path d="M38 88 L34 76 L44 84 Z" fill="#8fca8f"/>
+          <path d="M82 88 L86 76 L76 84 Z" fill="#8fca8f"/>
+        </g>
+      </svg>
+    </div>
+    <div class="eyebrow">A little something for you</div>
+    <h1 class="script name-headline" id="nameHeadline">Happy Birthday,<br>My Love!</h1>
+    <button class="btn" id="toCode">Continue 💕</button>
+  </div>
+
+  <!-- ============ SCREEN 2: SECRET CODE ============ -->
+  <div class="screen" id="screen-code">
+    <div class="glass-card">
+      <div style="font-size:26px; margin-bottom:6px;">🎀</div>
+      <div class="neon-title">Secret Code for You</div>
+      <p class="sub" style="margin-top:10px;">Type the password only you would know</p>
+      <div style="height:16px;"></div>
+      <input type="text" class="code-input" id="codeInput" placeholder="Type your secret password...">
+      <div class="code-error" id="codeError"></div>
+      <div style="height:6px;"></div>
+      <button class="btn" id="unlockBtn" style="width:100%; justify-content:center;">Unlock 🎁</button>
+      <div style="height:12px;"></div>
+      <div class="code-hint">hint: something only we'd know 😉</div>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 3: PARTY ============ -->
+  <div class="screen" id="screen-party">
+    <div class="glass-card">
+      <div class="eyebrow">Surprise unlocked</div>
+      <h1 class="script" style="font-size:28px;">You were born to<br>shine, today of all days!</h1>
+      <p class="sub">A little journey awaits before your gift ✨</p>
+      <div style="height:6px;"></div>
+      <button class="btn" id="toCakeCut" style="width:100%; justify-content:center;">Start the Surprise 🎁</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 4: CAKE CUT ============ -->
+  <div class="screen" id="screen-cut">
+    <div class="glass-card">
+      <h1 class="script" style="font-size:26px;">Cut the Cake 🎂</h1>
+      <p class="sub">Drag your finger across the box to slice</p>
+      <div style="height:10px;"></div>
+      <div class="cut-box" id="cutBox">
+        <div class="cake-emoji-big">🍰</div>
+        <div class="slice-line" id="sliceLine"></div>
+        <div class="knife-cursor" id="knifeCursor">🔪</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 5: HAPPY BIRTHDAY ============ -->
+  <div class="screen" id="screen-happy">
+    <div class="glass-card">
+      <h1 class="script" style="font-size:30px;">Happy Birthday,<br>My Girl! 💗</h1>
+      <div style="height:100px;"></div>
+      <button class="btn" id="toCakeImage" style="width:100%; justify-content:center;">Next →</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 6: CAKE IMAGE ============ -->
+  <div class="screen" id="screen-cakeimg">
+    <div class="glass-card">
+      <h1 class="script" style="font-size:26px;">Made just for you 🍓</h1>
+      <svg class="pixel-cake" viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="55" width="80" height="28" rx="6" fill="#f6a8c4"/>
+        <path d="M10 55 Q20 45 30 55 Q40 45 50 55 Q60 45 70 55 Q80 45 90 55 L90 55 L10 55 Z" fill="#d9a4e0"/>
+        <rect x="15" y="30" width="70" height="25" rx="6" fill="#f2c8de"/>
+        <circle cx="30" cy="30" r="6" fill="#e78ca8"/>
+        <circle cx="50" cy="27" r="6" fill="#e78ca8"/>
+        <circle cx="70" cy="30" r="6" fill="#e78ca8"/>
+        <rect x="27" y="16" width="3" height="14" fill="#fff"/>
+        <rect x="47" y="12" width="3" height="18" fill="#fff"/>
+        <rect x="67" y="16" width="3" height="14" fill="#fff"/>
+        <circle cx="28.5" cy="14" r="3" fill="#ffcf4d"/>
+        <circle cx="48.5" cy="10" r="3" fill="#ff9f4d"/>
+        <circle cx="68.5" cy="14" r="3" fill="#ffcf4d"/>
+        <rect x="5" y="80" width="90" height="6" rx="3" fill="#fff"/>
+      </svg>
+      <button class="btn" id="toGallery" style="width:100%; justify-content:center;">Next →</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 7: GALLERY ============ -->
+  <div class="screen" id="screen-gallery">
+    <div class="glass-card">
+      <h1 class="script" style="font-size:26px;">Our Memories ❤️</h1>
+      <p class="sub">Swipe through some beautiful moments</p>
+      <div style="height:10px;"></div>
+      <div class="polaroid-stack" id="polaroidStack"></div>
+      <div style="height:10px;"></div>
+      <div class="gallery-dots" id="galleryDots"></div>
+      <div style="height:14px;"></div>
+      <button class="btn" id="toLetter" style="width:100%; justify-content:center;">Read Letter 💌</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 8: LETTER ============ -->
+  <div class="screen" id="screen-letter">
+    <div class="glass-card">
+      <h1 class="script" style="font-size:26px;">A Letter For You 💌</h1>
+      <p class="sub">Tap the wax seal to open your special message</p>
+      <div style="height:10px;"></div>
+      <div class="env-box" id="envBox">
+        <div class="wax-seal"><span id="waxIcon">💗</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SCREEN 9: MESSAGE ============ -->
+  <div class="screen" id="screen-message" style="position:relative;">
+    <div class="close-x" id="closeMsg">✕</div>
+    <div class="msg-card" id="msgBody">
+      <p>Happy 19th birthday, my love. Every year with you makes me more grateful you exist 💗</p>
+      <p>You make my heart feel at home 😌</p>
+      <p>I want us to share unlimited laughs, love, silly fights, late-night talks, and countless beautiful memories together 😘</p>
+      <p>Thank you for being my comfort, my happiness, and my favorite person in every sense ❤️</p>
+      <p>I love you forever and ever and ever ♾️😘❤️</p>
+    </div>
+    <button class="btn" id="restartBtn">(•ᴗ•) ♥</button>
+  </div>
+
+</div>
+<div class="signature">for you, always</div>
+
+<script>
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(w=>w.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+/* floating hearts ambient */
+(function(){
+  const positions = [
+    {top:'8%', left:'10%'}, {top:'12%', right:'10%'},
+    {bottom:'10%', right:'12%'}, {bottom:'22%', left:'8%'},
+    {top:'50%', left:'4%'}, {top:'40%', right:'5%'}
+  ];
+  positions.forEach((pos,i)=>{
+    const el = document.createElement('div');
+    el.className = 'heart-float';
+    el.textContent = ['♡','✦','♥'][i%3];
+    Object.assign(el.style, pos);
+    el.style.animationDelay = (i*0.6)+'s';
+    document.getElementById('app').appendChild(el);
+  });
+})();
+
+/* ---- CONFIG: set the name + secret password here ---- */
+const HER_NAME = "Supriya";           // change to her actual name
+const SECRET_PASSWORD = "iloveyou";   // change to your secret word (case-insensitive)
+document.getElementById('nameHeadline').innerHTML = `Happy Birthday,<br>${HER_NAME}!`;
+
+/* landing -> code */
+document.getElementById('toCode').addEventListener('click', ()=> showScreen('screen-code'));
+
+/* secret code unlock */
+const codeInput = document.getElementById('codeInput');
+const codeError = document.getElementById('codeError');
+document.getElementById('unlockBtn').addEventListener('click', ()=>{
+  const val = codeInput.value.trim().toLowerCase();
+  if(val === SECRET_PASSWORD.toLowerCase() && val.length > 0){
+    showScreen('screen-party');
+  } else {
+    codeError.textContent = "That's not quite it — try again 💭";
+    codeInput.classList.remove('shake');
+    void codeInput.offsetWidth;
+    codeInput.classList.add('shake');
+  }
+});
+codeInput.addEventListener('keydown', e=>{
+  if(e.key === 'Enter') document.getElementById('unlockBtn').click();
+});
+
+/* party -> cut */
+document.getElementById('toCakeCut').addEventListener('click', ()=> showScreen('screen-cut'));
+
+/* cake cut interaction */
+const cutBox = document.getElementById('cutBox');
+const sliceLine = document.getElementById('sliceLine');
+const knifeCursor = document.getElementById('knifeCursor');
+let cutting = false, cutDistance = 0, lastX = null;
+
+function pointFromEvent(e, rect){
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x: clientX - rect.left, y: clientY - rect.top };
+}
+function cutStart(e){
+  cutting = true; cutDistance = 0; lastX = null;
+  const rect = cutBox.getBoundingClientRect();
+  const p = pointFromEvent(e, rect);
+  sliceLine.style.display = 'block'; sliceLine.style.left = p.x+'px';
+  knifeCursor.style.display = 'block'; knifeCursor.style.left = p.x+'px'; knifeCursor.style.top = p.y+'px';
+  lastX = p.x;
+}
+function cutMove(e){
+  if(!cutting) return;
+  const rect = cutBox.getBoundingClientRect();
+  const p = pointFromEvent(e, rect);
+  sliceLine.style.left = p.x+'px';
+  knifeCursor.style.left = p.x+'px'; knifeCursor.style.top = p.y+'px';
+  if(lastX !== null) cutDistance += Math.abs(p.x - lastX);
+  lastX = p.x;
+  if(cutDistance > 120){
+    cutting = false;
+    triggerConfetti();
+    setTimeout(()=> showScreen('screen-happy'), 250);
+  }
+}
+function cutEnd(){ cutting = false; sliceLine.style.display = 'none'; knifeCursor.style.display = 'none'; }
+cutBox.addEventListener('mousedown', cutStart);
+cutBox.addEventListener('mousemove', cutMove);
+window.addEventListener('mouseup', cutEnd);
+cutBox.addEventListener('touchstart', cutStart, {passive:true});
+cutBox.addEventListener('touchmove', cutMove, {passive:true});
+cutBox.addEventListener('touchend', cutEnd);
+
+document.getElementById('toCakeImage').addEventListener('click', ()=> showScreen('screen-cakeimg'));
+document.getElementById('toGallery').addEventListener('click', ()=> showScreen('screen-gallery'));
+document.getElementById('toLetter').addEventListener('click', ()=> showScreen('screen-letter'));
+
+/* gallery */
+const galleryData = [1,2,3,4];
+const stack = document.getElementById('polaroidStack');
+const dotsWrap = document.getElementById('galleryDots');
+let galleryIndex = 0;
+function renderGallery(){
+  stack.innerHTML = ''; dotsWrap.innerHTML = '';
+  galleryData.forEach((n,i)=>{
+    const card = document.createElement('div');
+    card.className = 'polaroid';
+    const offset = i - galleryIndex;
+    card.style.zIndex = 10 - Math.abs(offset);
+    if(offset === 0){ card.style.transform='translateX(0) rotate(0deg)'; card.style.opacity='1'; }
+    else if(offset > 0){ card.style.transform=`translateX(${offset*14}px) rotate(${offset*3}deg)`; card.style.opacity = offset===1?'0.55':'0'; }
+    else { card.style.transform=`translateX(${offset*14}px) rotate(${offset*3}deg)`; card.style.opacity='0'; }
+    card.innerHTML = `<div class="frame">📷</div><span class="cap">Memory ${n}</span>`;
+    stack.appendChild(card);
+    const dot = document.createElement('span');
+    if(i===galleryIndex) dot.className='on';
+    dotsWrap.appendChild(dot);
+  });
+}
+renderGallery();
+let galleryStartX = null;
+stack.addEventListener('touchstart', e=>{ galleryStartX = e.touches[0].clientX; });
+stack.addEventListener('touchend', e=>{
+  if(galleryStartX===null) return;
+  const diff = e.changedTouches[0].clientX - galleryStartX;
+  if(diff < -35 && galleryIndex < galleryData.length-1){ galleryIndex++; renderGallery(); }
+  else if(diff > 35 && galleryIndex > 0){ galleryIndex--; renderGallery(); }
+  galleryStartX = null;
+});
+stack.addEventListener('click', ()=>{ galleryIndex = (galleryIndex+1)%galleryData.length; renderGallery(); });
+
+/* letter */
+document.getElementById('envBox').addEventListener('click', ()=>{
+  document.getElementById('waxIcon').textContent = '💌';
+  triggerConfetti();
+  setTimeout(()=> showScreen('screen-message'), 400);
+});
+
+/* message */
+document.getElementById('closeMsg').addEventListener('click', resetAll);
+document.getElementById('restartBtn').addEventListener('click', resetAll);
+function resetAll(){
+  showScreen('screen-landing');
+  galleryIndex = 0; renderGallery();
+  document.getElementById('waxIcon').textContent = '💗';
+  codeInput.value = ''; codeError.textContent = '';
+}
+
+/* confetti */
+const canvas = document.getElementById('confetti-canvas');
+const ctx = canvas.getContext('2d');
+function resizeCanvas(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+let particles = [];
+const colors = ['#ff4d80','#ff9fc0','#ffd166','#f3e6ff','#ffc2d4'];
+function triggerConfetti(){
+  const w = window.innerWidth;
+  for(let i=0;i<90;i++){
+    particles.push({
+      x: w/2 + (Math.random()-0.5)*80, y: window.innerHeight*0.35,
+      vx:(Math.random()-0.5)*8, vy: Math.random()*-6-2,
+      size: Math.random()*6+4, color: colors[Math.floor(Math.random()*colors.length)],
+      rot: Math.random()*360, vr:(Math.random()-0.5)*10, life:0
+    });
+  }
+}
+function animateConfetti(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.vy += 0.18; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life++;
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+    ctx.fillStyle = p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
+    ctx.restore();
+  });
+  particles = particles.filter(p=> p.y < window.innerHeight+20 && p.life < 400);
+  requestAnimationFrame(animateConfetti);
+}
+animateConfetti();
+</script>
+</body>
+</html>
